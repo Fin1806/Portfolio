@@ -1,0 +1,138 @@
+/* Shared light appearance for the homepage and existing case studies. */
+:root,body.home-page{color-scheme:light;--paper:#fff;--ink:#1d1d1f;--muted:#66666e;--line:#dedee3;--blue:#416b91}
+body{background:var(--paper);color:var(--ink)}
+.desktop-menubar,.menubar{background:#ffffffe0;color:#4e4e55;border-bottom-color:#0000000e}
+.desktop-menubar time,.menu-status{color:#74747b}
+.brand-mark{background:#303033;color:#fff}
+.desk{background:#fafafa}
+.desk-intro h1{color:#1d1d1f}
+.desk-intro h1 span{white-space:nowrap}
+.desk-intro>p{color:#68686f}
+.intro-link{color:#4e4e56;border-bottom-color:#00000032}
+.intro-link:hover{color:#111;border-bottom-color:#00000090}
+.desk-clock{background:linear-gradient(145deg,#ffffffdf,#f7f7f9e8);border-color:#fff;box-shadow:inset 0 1px 0 #fff,0 12px 34px #00000012}
+.clock-city{color:#77777f}.clock-ticks{stroke:#9c9ca3}
+.clock-hour,.clock-minute{stroke:#303034}.clock-second{stroke:#b07954}
+.clock-readout>span{color:#77777f}
+.move-handle{background:#00000009}.move-handle svg{stroke:#73737b}
+.document-paper{background:linear-gradient(135deg,#fffefb,#f0eee8);box-shadow:0 14px 30px #00000016,inset 0 1px 0 #fff}
+.resume-document,.folder-shortcut{color:#44444d!important}
+.document-caption>span{color:#77777f}
+.folder-icon{filter:drop-shadow(0 6px 6px #00000019)}
+.folder-shortcut:focus-visible>span{background:#e0e6ed;color:#1d1d1f}
+.drag-hint{color:#77777e}.reset-layout{color:#606069!important}
+.dock-surface{background:#ffffffa8;border-color:#fff;box-shadow:inset 0 1px 0 #fff,0 10px 30px #00000014}
+.dock-tile{border-color:#0000000b;box-shadow:inset 0 1px 1px #ffffff55,0 3px 6px #00000020}
+.dock-label{background:#313135;color:#fff;box-shadow:0 3px 10px #0002}
+.work-heading>a{color:#66666e}
+.work-tab,.work-tab:after{background:#e5e7eb;color:#62656d;border-color:#00000005}
+.work-folder-body{background:linear-gradient(150deg,#f8f9fb,#eceef2);border-color:#fff;box-shadow:inset 0 1px 0 #fff,0 -8px 28px #00000005}
+.work-folder-copy>p{color:#62636b}.work-technologies{color:#71717a}
+.project-open{background:#303034;color:#fff;box-shadow:inset 0 1px 0 #ffffff15,0 2px 5px #00000012}
+.project-open:hover{background:#48484e;color:#fff}
+.preview-window{background:#fff;border-color:#dedee4;box-shadow:0 20px 45px #00000012}
+.window-bar{background:#f1f1f3;color:#75757e;border-bottom-color:#dddde2}
+.window-dots i{background:#ff6058}.window-dots i:nth-child(2){background:#febc2e}.window-dots i:nth-child(3){background:#28c840}
+.transcript-lines i{background:#b8bbc4}
+.summary-output{background:#f3f3f6;border-color:#e6e6eb}
+.summary-output>span{color:#4f4f59}.summary-output .transcript-lines i{background:#969aa6}
+.summary-output small,.preview-caption{color:#75757e}
+.housing-demo>svg{stroke:#9a9487}
+.housing-fields>span{border-color:#e1e2e7;background:#fafafb;color:#74747e}
+.housing-model,.malware-flow{color:#666672}.malware-flow{border-top-color:#e6e6eb}
+.feature-readout>span{color:#757580}.feature-readout strong{color:#41414a}
+.home-page .experience-date{color:#74747d}.home-page .company{color:#516779}
+.tags span,.home-page .tags span{border-color:#dedee4;background:#f7f7f9;color:#66666f}
+.about-window{background:#fff;border-color:#dedee3;box-shadow:0 20px 55px #0000000d}
+.about-facts{border-top-color:#e3e3e8}.about-facts span{color:#74747e}
+footer,.home-page footer{background:#f6f6f8}
+.home-page footer a:hover{color:#1d1d1f}
+.email{border-bottom-color:#c5c5cc}.footer-bottom{color:#74747c;border-top-color:#dedee4}
+.skip{background:#fff;color:#222}
+.back-link{color:#62626e}.section-label{color:#73737e}
+.button{background:#303034;color:#fff}.button:hover{background:#48484e;color:#fff}
+.workflow{background:#f2f3f6}.flow-steps>div{background:#fff;border-color:#dddfe6}
+.flow-steps span{color:#73737e}.flow-steps>div:not(:last-child):after{color:#818694}
+.limits{background:#f4f4f7;border-left-color:#aeb7c5}.case-next>span{color:#74747e}
+::selection{background:#d8e5f2;color:#1d1d1f}
+@media(hover:hover) and (pointer:fine){.folder-shortcut:hover>span{background:#00000009}}
+
+/* Project colors: violet for language, amber for housing, teal for images. */
+.object-meeting{--object-tint:#eee6ff}.object-housing{--object-tint:#fff0d7}.object-malware{--object-tint:#ddf7ef}
+.folder-shortcut:focus-visible>span{background:var(--object-tint,#e8edf5);color:#30303a}
+.project-summarizer{--project-color:#7950cd;--project-tint:#ece4fb;--project-ink:#6942ac}
+.project-housing{--project-color:#a6570b;--project-tint:#fff0d6;--project-ink:#975208}
+.project-malware{--project-color:#137965;--project-tint:#daf4eb;--project-ink:#126c5c}
+.work-folder .work-tab,.work-folder .work-tab:after{background:var(--project-tint,#e5e7eb);color:var(--project-ink,#62656d)}
+.work-folder .project-open{background:var(--project-color,#303034);color:#fff}
+.work-folder .project-open:hover{filter:brightness(.93)}
+.preview-summary .window-bar{background:#f1ebfc;color:#71558e}
+.preview-summary .summary-output{background:#f5f0ff;border-color:#e8def9}
+.preview-summary .summary-output .transcript-lines i{background:#a48bcf}
+.preview-housing .window-bar{background:#fff4df;color:#946b33}
+.preview-housing .housing-demo>svg{stroke:#de963d}
+.preview-malware .window-bar{background:#e5f7ef;color:#467c6c}
+.preview-malware .feature-readout strong{color:#16806b}
+.tile-home{background:linear-gradient(#fff,#edf0f5);color:#3d5b85!important}
+.tile-projects{background:linear-gradient(#67b0ff,#2d7de4)}
+.tile-experience{background:linear-gradient(#ffb66e,#ee853d)}
+.tile-about{background:linear-gradient(#bf91f5,#8d56d3)}
+.tile-resume{background:linear-gradient(#f8fbff,#dce9fb);color:#416eb0!important}
+.tile-contact{background:linear-gradient(#62d5ae,#2ba17c)}
+.about-interest-links{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:22px}
+.about-interest-links a{font-size:12px;color:#45638a;border-bottom:1px solid #45638a40;padding-bottom:3px}
+.about-interest-links a>span{margin-left:6px}
+@media(hover:hover) and (pointer:fine){.folder-shortcut:hover>span{background:var(--object-tint,#edf0f5)}}
+
+/* macOS-inspired desktop: cool surfaces, Finder blue, system-color app tiles. */
+:root,body.home-page{--paper:#fff;--ink:#1d1d1f;--muted:#6e6e73;--line:#d2d2d7;--blue:#0066cc}
+.desk{height:100svh;background:#f5f5f7}
+.desk-intro{top:42%}
+.intro-signature{display:block;width:40px;height:40px;margin:0 auto 22px}
+.intro-signature .f-logo{width:40px;height:40px;display:block;box-shadow:0 4px 10px #0000000d;border-radius:12px}
+.desk-intro h1{animation:desk-pop 1000ms var(--ease-out) both}
+.desk-intro>p{animation:desk-pop 750ms 180ms var(--ease-out) both}
+.intro-link{animation:desk-pop 650ms 300ms var(--ease-out) both}
+.intro-signature{animation:desk-pop 450ms var(--ease-out) both}
+.widget-entrance{animation:desk-pop 300ms var(--widget-delay,700ms) var(--ease-out) both}
+.object-clock{--widget-delay:700ms}.object-resume{--widget-delay:740ms}
+.object-meeting{--widget-delay:780ms}.object-housing{--widget-delay:820ms}.object-malware{--widget-delay:860ms}.object-note{--widget-delay:900ms}
+.dock-rail .desktop-dock{animation:desk-pop 300ms 980ms var(--ease-out) both}
+@keyframes desk-pop{from{opacity:0;transform:translateY(10px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.object-clock{top:10%}.object-resume{bottom:23%}
+.desk-clock{background:linear-gradient(145deg,#fff,#f2f2f7);border-color:#fff;box-shadow:inset 0 1px 0 #fff,0 8px 24px #0000000d,0 1px 3px #00000008}
+.clock-second{stroke:#ff3b30}
+.document-paper{background:linear-gradient(135deg,#fff,#f5f5f7);color:#1d1d1f}
+.object-meeting,.object-housing,.object-malware{--object-tint:#dcefff}
+.dock-surface{background:#e8e8edb8;border-color:#ffffffcf;box-shadow:inset 0 1px 0 #fff,0 8px 24px #00000012}
+.tile-home{background:#1d1d1f;color:#fff!important}.tile-home .f-logo{width:43px;height:43px;stroke:none}
+.tile-projects{background:linear-gradient(#5ac8fa,#007aff)}
+.tile-experience{background:linear-gradient(#ffb340,#ff9500)}
+.tile-about{background:linear-gradient(#cc81f0,#af52de)}
+.tile-resume{background:linear-gradient(#fff,#f2f2f7);color:#007aff!important}
+.tile-contact{background:linear-gradient(#65df85,#34c759)}
+.project-summarizer,.project-housing,.project-malware{--project-color:#0066cc;--project-tint:#e2f1fb;--project-ink:#245775}
+.work-folder-body{background:linear-gradient(145deg,#f8f8fa,#eeeef2)}
+.preview-summary .window-bar,.preview-housing .window-bar,.preview-malware .window-bar{background:#f2f2f7;color:#6e6e73}
+.preview-summary .summary-output{background:#f2f7fd;border-color:#e1eaf5}
+.preview-summary .summary-output .transcript-lines i{background:#8bb8de}
+.preview-housing .housing-demo>svg{stroke:#5b9ac9}.preview-malware .feature-readout strong{color:#0071c5}
+.object-note{left:32%;bottom:14%;width:235px}
+.sticky-paper{padding:20px 22px 18px;background:linear-gradient(135deg,#fff3a8,#ffe57e);border:1px solid #ead27880;border-radius:3px 3px 16px 3px;box-shadow:0 10px 22px #7b651219,inset 0 1px 0 #fff9;transform:rotate(-3deg);color:#504521;user-select:text}
+.sticky-paper h2{font-size:14px;font-weight:650;letter-spacing:-.025em;line-height:1.3;margin:0 0 12px}
+.sticky-paper p{font-size:12px;line-height:1.55;margin:0 0 10px;color:#62552a}
+.note-signoff{display:block;font-size:11px;line-height:1.5;margin-top:12px;color:#706135}.note-signoff>span{margin-left:4px}
+.object-note>.move-handle{top:5px;right:2px;background:#80651212}
+.brand-mark{background:transparent;width:32px;height:32px;padding:0}.brand-mark .f-logo{display:block;width:32px;height:32px}
+@media(min-width:981px) and (max-width:1199px){.object-note{left:32%;width:216px}.sticky-paper{padding:17px 19px}.sticky-paper p{font-size:11px}.intro-signature{margin-bottom:18px}}
+@media(max-width:980px){.desk{height:auto;padding-top:65px}.desk-intro{top:auto}.intro-signature{margin:0 0 20px}.object-clock>.widget-entrance{width:100%}.object-note{grid-column:2/6;width:270px;justify-self:center;margin:6px 0 12px}.sticky-paper{padding:22px 25px}.sticky-paper p{font-size:13px}.tile-home .f-logo{width:43px;height:43px}}
+@media(max-width:680px){.desk{padding-top:48px}.object-note{grid-column:1/-1;width:min(260px,85%);margin-top:7px}.tile-home .f-logo{width:39px;height:39px}.intro-signature,.intro-signature .f-logo{width:34px;height:34px}}
+@media(max-width:380px){.tile-home .f-logo{width:37px;height:37px}}
+@media(prefers-reduced-motion:reduce){.desk-intro h1,.desk-intro>p,.intro-link,.intro-signature,.widget-entrance,.dock-rail .desktop-dock{animation:none}}
+
+/* Keep the personal note clear of the greeting and dock on shorter desktops. */
+@media(min-width:981px){.desk-intro{top:50%}.object-note{left:63%;bottom:17%}}
+@media(min-width:981px) and (max-width:1199px){.object-note{left:60%}}
+
+/* Contain the final margin so every sticky folder shares the same exit edge. */
+.project-stack{display:flow-root}
