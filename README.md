@@ -1,46 +1,45 @@
-# Finley’s portfolio
+# Finley's Portfolio
 
-A portable, dependency-free portfolio built with HTML, CSS, and JavaScript. Uses a light desktop design and an Apple-style local system font stack; no external fonts are requested.
+**[Visit finleydarma.me](https://finleydarma.me)** · [Resume](dist/assets/finley-darma-resume.pdf) · [LinkedIn](https://www.linkedin.com/in/finley-septhian-darma/)
 
-## Preview locally
+My personal website, bringing together my machine learning projects, automation work, experience, and a little about me.
 
-From this directory:
+## About me
+
+I'm **Finley Septhian Darma**, a Computer Science undergraduate at Bina Nusantara University in Indonesia. I enjoy experimenting with machine learning models, working with data, and connecting tools through automation.
+
+**GPA:** 3.86 · **Expected graduation:** 2028
+
+## Experience
+
+- **Machine Learning Engineering Intern — FlyRank AI** · June 2026–present
+  Contribute to content review ranking, action queues with reason codes and confidence labels, and search-performance analysis using Python, scikit-learn, and DuckDB.
+- **AI Support Associate — Solusi Prima Packaging** · June 2025–present
+  Build chatbot and CRM workflows, including Bigin updates from voice notes and text messages, using n8n, MySQL, and Supabase.
+- **Teaching and community:** SASC scholarship tutor and former BNCC Learning and Training Activist, contributing to programming curriculum, exercises, and learning materials.
+
+## Personal Projects
+
+- **[Automatic Meeting Summarizer](https://finleydarma.me/projects/meeting-summarizer/)** — Transcript summarization with Pegasus and notebooks exploring T5, LED, BART, and Pegasus.
+- **[House Price Prediction](https://finleydarma.me/projects/house-price-prediction/)** — Ames Housing regression experiments with Random Forest and XGBoost, connected to a Streamlit interface.
+- **[Malware Image Classification](https://finleydarma.me/projects/malware-detection/)** — Grayscale image classification using GLCM texture features and a Flask prediction interface.
+
+## What's on the website
+
+Project case studies, work experience, technical skills, a downloadable resume, and contact details. The homepage has a light desktop-inspired design with draggable widgets, project folders, a personal sticky note, and a navigation dock.
+
+Built with **HTML, CSS, and JavaScript**. Hosted on **Vercel** at **finleydarma.me**.
+
+## Run locally
+
+From the repository root:
 
 ```bash
-python3 -m http.server 8000 --directory dist
+python -m http.server 8000 --directory dist
 ```
 
-Open http://localhost:8000. Stop with Ctrl+C. All three project pages work via normal directory URLs. Deploy the contents of `dist/` to any static web host when ready.
+Open [localhost:8000](http://localhost:8000). The website files are in `dist/`; no build step is needed.
 
-## Content
+## Contact
 
-- Homepage: `dist/index.html`
-- Shared styling and clock: `dist/assets/`
-- Case studies: `dist/projects/`
-- Downloadable resume: `dist/assets/finley-darma-resume.pdf`
-
-Descriptions are grounded in the supplied resume and public GitHub repositories. Project diagrams are illustrations, not product screenshots. Project contributions use neutral wording because individual and team roles have not been specified. No project metrics, availability claims, or live model demos are invented.
-
-The social preview is an original SVG; create a PNG version and set an absolute image URL when configuring production sharing metadata. Dates and ongoing roles reflect the supplied October 2026 resume.
-
-## Interactive desktop
-
-The homepage adds movable widgets and project folders, a proximity-responsive navigation dock, and folder-shaped project panels. On desktop, drag an object or focus its move handle and use arrow keys (Shift for larger steps). Home restores the focused object. Mobile uses a normal grid without dragging. Reduced motion disables magnification and entrance movement.
-
-Homepage styles and interactions: `dist/assets/homepage.css`, `desktop.mjs`, and `desktop-math.mjs`. Run `node tests/desktop-math.test.mjs` to check movement boundaries, resize recovery, and dock proximity. No packages, API keys, or agent backend are needed.
-
-The pre-edit homepage and README are preserved in `backups/before-interactive-desktop/`.
-
-## Shared light appearance
-
-`dist/assets/light.css` styles the homepage and all three case studies. The introduction focuses on machine learning, data, and automation. The previous dark version is backed up in `backups/before-light-mode/`.
-
-## Project color identities
-
-Language/summarization uses violet, housing uses amber, and image classification uses teal. Desktop folders, project tabs, and preview windows share these colors; navigation icons use brighter app-like colors. The light background and existing drag interactions are preserved.
-
-## macOS-inspired refresh
-
-Cool silver surfaces, Finder-blue project folders, system-color dock icons, a simple monochrome F mark, and a movable personal sticky note. The homepage top bar is removed. CSS stages the greeting before the widgets; inner wrappers keep entrance transforms independent of dragging. Reduced motion shows all content immediately. Backup: `backups/before-macos-refresh/`.
-
-The greeting has no logo above it. Widget interaction finishes its entrance animation permanently; it never replays on drop or blur. Project stack margins are contained so all folders share the same sticky exit boundary.
+[Email](mailto:finley.septhian@gmail.com) · [GitHub](https://github.com/Fin1806) · [LinkedIn](https://www.linkedin.com/in/finley-septhian-darma/)
