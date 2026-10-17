@@ -42,4 +42,4 @@ Open [localhost:8000](http://localhost:8000). The website files are in `dist/`; 
 
 ## Contact
 
-[Email](mailto:finley.septhian@gmail.com) · [GitHub](https://github.com/Fin1806) · [LinkedIn](https://www.linkedin.com/in/finley-septhian-darma/)
+[Email](mailto:finley.septhian@gmail.com) · [Phone: 0878 7374 0988](tel:+6287873740988) · [GitHub](https://github.com/Fin1806) · [LinkedIn](https://www.linkedin.com/in/finley-septhian-darma/)
