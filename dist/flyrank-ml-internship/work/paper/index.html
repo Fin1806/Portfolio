@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f4eb">
+  <meta name="description" content="An independent FlyRank internship research note on checking client-wide search declines before refreshing individual pages.">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Before You Refresh — Finley Septhian Darma">
+  <meta property="og:description" content="A client-wide check for a page review queue, using May–June search data and a held-out baseline comparison.">
+  <title>Before You Refresh — Finley Septhian Darma</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to article</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="wordmark" href="../../" aria-label="FlyRank internship research home"><span class="mark" aria-hidden="true">F</span><span>Independent research note</span></a>
+      <nav aria-label="Article sections">
+        <a href="#question">Question</a>
+        <a href="#results">Results</a>
+        <a href="#recommendations">What to do</a>
+        <a href="#reproduce">Notebook</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article>
+      <header class="hero shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> FlyRank ML Internship <span aria-hidden="true">/</span> Research note 01</p>
+          <h1>Before You <em>Refresh</em></h1>
+          <p class="dek">When a page loses search visibility, check whether its neighbors fell too.</p>
+          <p class="byline">By <strong>Finley Septhian Darma</strong> <span aria-hidden="true">·</span> <time datetime="2026-10-19">19 October 2026</time></p>
+        </div>
+        <div class="hero-aside" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="orbit orbit-three"></span><span class="hero-aside-label">Page signal<br>Client pattern<br>Editor decision</span></div>
+      </header>
+
+      <section class="abstract-wrap shell" aria-labelledby="abstract-title">
+        <div class="section-label"><span>Abstract</span><span>Five-sentence summary</span></div>
+        <div class="abstract prose">
+          <h2 id="abstract-title" class="visually-hidden">Abstract</h2>
+          <p>When many pages for one client lose search visibility together, should an editor check the broader pattern before refreshing individual pages? I use the gated FlyRank warehouse release to compare May search signals with observed June declines and to examine complete May–June page windows by client. On the held-out clients, the simple rule reaches 95% precision among its top 20 pages, compared with 80% for a logistic model, against a 65.5% decline base rate. A separate end-of-June check flags 14 of 32 clients with enough matched pages under the stated broad-drop rule. These observations support a human investigation step before page-level edits, without identifying a decline's cause or measuring refresh effects.</p>
+        </div>
+      </section>
+
+      <div class="metric-band">
+        <div class="shell metrics" aria-label="Key measured results">
+          <div class="metric"><strong>95%</strong><span>Rule precision at 20<br>on held-out clients</span></div>
+          <div class="metric"><strong>14 / 32</strong><span>Clients flagged<br>with enough history</span></div>
+          <div class="metric"><strong>11 / 20</strong><span>Top June queue pages<br>in the broad route</span></div>
+        </div>
+      </div>
+
+      <section id="question" class="article-section shell" aria-labelledby="question-title">
+        <div class="section-label"><span>01 / Question</span><span>Why this matters</span></div>
+        <div class="prose">
+          <h2 id="question-title">A page drop can be part of a larger drop.</h2>
+          <p>An editor can work through a queue one page at a time. But when many pages for the same client lose visibility together, checking a shared pattern may be the better first step. <a href="https://developers.google.com/search/docs/monitor-debug/debugging-search-traffic-drops">Google Search Central advises checking the scope of a traffic drop</a> across a site, a page group, or one page. This paper tests a measurable client-level signal for that first check.</p>
+          <p>The output is a route for human review, not an automatic edit. A wrong route could waste editorial time or delay investigation of a shared issue. This is an independent internship study; the observed search data cannot diagnose the cause.</p>
+        </div>
+      </section>
+
+      <section id="data" class="article-section shell" aria-labelledby="data-title">
+        <div class="section-label"><span>02 / Data</span><span>What was measured</span></div>
+        <div class="prose">
+          <h2 id="data-title">The analysis is a May–June slice of a much larger release.</h2>
+          <p>The gated <a href="https://huggingface.co/datasets/FlyRank/internship-warehouse/blob/main/README.md">FlyRank warehouse release v20260703</a> contains 78,835,655 daily rows in its performance fact. I read the May and June 2026 partitions, not the entire release. An earlier source audit found 6,390 repeated GSC daily rows in this window; their GSC values matched, so the loader keeps one observation per client, page, and day.</p>
+          <p>The historical check retains 102,532 page-client records across 42 clients with 30 observed days in each window, nonmissing impressions and clicks, and at least 100 May impressions. The end-of-June review queue separately contains 96,678 pages across 44 clients with complete June coverage and at least 100 June impressions.</p>
+        </div>
+        <div class="timeline" aria-label="Analysis time windows">
+          <div><span class="timeline-kicker">May 2–31</span><strong>Known at the cutoff</strong><p>Thirty days of impressions, clicks, and average position for the page rule and model.</p></div>
+          <div><span class="timeline-kicker">June 1–30</span><strong>Observed afterward</strong><p>Thirty-day decline label and a separate end-of-June client pattern check.</p></div>
+          <div><span class="timeline-kicker">July</span><strong>Not in this release</strong><p>No later outcome test and no measured refresh effect.</p></div>
+        </div>
+        <div class="prose data-note">
+          <p>Hashed IDs are used only to join pages and hold clients apart during validation. The fixed 90-day query table is excluded because its recent fields can overlap the June label. GA4 is excluded because early availability varies by client and missing values can be filled with zero. No client names, page URLs, titles, or raw queries appear in the analysis outputs.</p>
+        </div>
+      </section>
+
+      <section id="method" class="article-section shell" aria-labelledby="method-title">
+        <div class="section-label"><span>03 / Method</span><span>Two checks, separate in time</span></div>
+        <div class="prose">
+          <h2 id="method-title">First rank pages. Then check the scope.</h2>
+          <p>The prediction task uses five May fields: log impressions, log clicks, click-through rate, average position, and a missing-position indicator. A page receives an observed June decline label when June impressions are more than 20% below May impressions. Missing position is marked separately, so a computational zero is never read as a real ranking position.</p>
+          <p>The transparent rule prioritizes pages with above-median May impressions, low May CTR, and average position from 11 through 20. Its cutoffs come from training clients. I compare it with scaled logistic regression on the same five inputs. A seeded client-grouped split holds out 11 clients and 10,763 pages; the rule and model are scored on those exact pages. No June value or hashed ID is a model input.</p>
+        </div>
+        <div class="method-callout">
+          <p class="callout-kicker">The broad-drop rule · checked at 30 June</p>
+          <p>At least <strong>30</strong> pages with complete May and June windows; more than <strong>60%</strong> of them lose over <strong>20%</strong> of impressions; and their combined impressions fall over <strong>20%</strong>.</p>
+          <small>I use the May impression floor for these matched pages. A June floor would drop pages with the steepest falls. This check is descriptive and never enters the May prediction.</small>
+        </div>
+      </section>
+
+      <section id="results" class="article-section shell" aria-labelledby="results-title">
+        <div class="section-label"><span>04 / Results</span><span>What the two checks found</span></div>
+        <div class="prose">
+          <h2 id="results-title">The simple rule beat the model on this split.</h2>
+          <p>The held-out decline base rate was 65.5%. At the top 20, the rule selected 95% of pages with an observed June decline and the model selected 80%. One rule selection and four model selections did not meet the decline label; that is an error against a search proxy, not proof that those pages need no attention. At the top 50, the values were 92% and 82%. Model accuracy was 63.7%, below the 65.5% majority-class accuracy. I kept the transparent rule for the June review queue.</p>
+        </div>
+        <figure class="chart-card">
+          <img src="../figures/capstone_model_comparison.svg" alt="Grouped bar chart: rule precision is 95% at 20 and 92% at 50, versus model precision of 80% and 82%; the held-out decline base rate is 65.5%." width="880" height="450">
+          <figcaption><strong>Figure 1.</strong> Rule and model precision on the same 10,763 held-out pages from 11 clients. The dashed line marks the 65.5% decline base rate. These are one-cutoff results, not a future-month test. <a href="../figures/capstone_model_comparison.svg">Open full-size chart</a></figcaption>
+        </figure>
+        <div class="prose result-spacer">
+          <h3>The broader check changes where a person looks first.</h3>
+          <p>Among the 42 clients with complete-window pages, 32 have at least 30 matched pages. Fourteen meet the broad-drop rule, 18 have enough pages but do not meet it, and 10 have too few pages to classify. In the June queue, 66,716 pages belong to the broad-investigation route, 27,938 to page review, and 2,024 to a coverage check. Eleven of the rule's top 20 June queue pages are in the broad route. All pages remain in the queue.</p>
+        </div>
+        <figure class="chart-card">
+          <img src="../figures/capstone_broad_drop.svg" alt="Of 42 observed clients, 14 meet the broad-drop rule, 18 have enough matched pages but do not meet it, and 10 have too few matched pages." width="880" height="390" loading="lazy">
+          <figcaption><strong>Figure 2.</strong> Client-level status in the complete-window May–June subset. The 10 clients below the 30-page minimum are unclassified, not negative cases. <a href="../figures/capstone_broad_drop.svg">Open full-size chart</a></figcaption>
+        </figure>
+        <div class="prose result-spacer">
+          <h3>The flag count moves with the threshold.</h3>
+          <p>Changing one cutoff at a time shows the rule's sensitivity. At page-loss cutoffs of 10%, 20%, and 30%, the flagged counts are 14, 14, and 11. At declining-page shares above 50%, 60%, and 70%, they are 14, 14, and 11. At combined-loss cutoffs of 10%, 20%, and 30%, they are 15, 14, and 10. The 30-page minimum is held fixed in this chart.</p>
+        </div>
+        <figure class="chart-card">
+          <img src="../figures/capstone_threshold_sensitivity.svg" alt="Three small bar charts show flagged clients by threshold: page loss 14, 14, 11; page share 14, 14, 11; combined loss 15, 14, 10." width="1040" height="390" loading="lazy">
+          <figcaption><strong>Figure 3.</strong> One threshold varies in each panel while the others stay at the main rule. This tests sensitivity around the chosen cutoffs; it does not validate them as optimal. <a href="../figures/capstone_threshold_sensitivity.svg">Open full-size chart</a></figcaption>
+        </figure>
+      </section>
+
+      <section id="limitations" class="article-section shell" aria-labelledby="limits-title">
+        <div class="section-label"><span>05 / Limits</span><span>How far the result goes</span></div>
+        <div class="prose">
+          <h2 id="limits-title">A review signal is not a cause or a treatment result.</h2>
+          <p>The model comparison covers one cutoff and one held-out set of clients. The high decline base rate makes top-k precision easier to reach. The 60-day coverage rule and May 100-impression floor exclude newer and smaller pages; clients also contribute very different numbers of pages. The broad thresholds are heuristics, not tuned or validated decisions.</p>
+          <p>A common decline could reflect demand, indexing, a shared template, measurement, or another factor. <a href="https://developers.google.com/search/blog/2022/10/performance-data-deep-dive">Search Console data have privacy filtering and reporting limits</a>. July outcomes are unavailable, so the June queue has no later test. No refresh intervention was measured. The data do not show whether any page edit would improve search performance.</p>
+        </div>
+      </section>
+
+      <section id="recommendations" class="article-section shell" aria-labelledby="rec-title">
+        <div class="section-label"><span>06 / Editor playbook</span><span>Ranked recommendations</span></div>
+        <div class="prose"><h2 id="rec-title">Use the flag to choose the first question.</h2></div>
+        <ol class="recommendations">
+          <li><span class="rec-number">01</span><div><h3>Check coverage.</h3><p>With fewer than 30 complete-window matched pages, gather more history before calling the pattern broad or local.</p></div></li>
+          <li><span class="rec-number">02</span><div><h3>Investigate flagged clients.</h3><p>Check Search Console coverage and indexing, compare clicks and positions, review seasonal demand, and look for shared site or template changes. Record what the evidence supports before editing many pages.</p></div></li>
+          <li><span class="rec-number">03</span><div><h3>Review page evidence.</h3><p>For clients without a broad flag, use the simple queue to select pages. Check accuracy, intent, titles, snippets, relevance, and internal links. A refresh, CTR edit, or no change is a human decision.</p></div></li>
+          <li><span class="rec-number">04</span><div><h3>Record and monitor.</h3><p>Keep the route, decision, and later outcome. Test this rule at another cutoff when data exist; measuring refresh impact needs a separate intervention design.</p></div></li>
+        </ol>
+      </section>
+
+      <section id="reproduce" class="article-section shell" aria-labelledby="reproduce-title">
+        <div class="section-label"><span>07 / Reproducibility</span><span>Code and access</span></div>
+        <div class="prose">
+          <h2 id="reproduce-title">The calculations are in the notebook.</h2>
+          <p><a href="https://github.com/Fin1806/flyrank-ml-internship/blob/main/work/notebooks/capstone.ipynb">Open the self-contained capstone notebook</a>, the <a href="https://github.com/Fin1806/flyrank-ml-internship/blob/main/work/capstone_report.md">full report</a>, or the <a href="https://github.com/Fin1806/flyrank-ml-internship">repository</a>. The prior work is in <a href="https://github.com/Fin1806/flyrank-ml-internship/blob/main/work/notebooks/w03_feature_leakage_check.ipynb">Week 3</a>, <a href="https://github.com/Fin1806/flyrank-ml-internship/blob/main/work/notebooks/w05_model.ipynb">Week 5</a>, <a href="https://github.com/Fin1806/flyrank-ml-internship/blob/main/work/notebooks/w06_validation_audit.ipynb">Week 6</a>, and <a href="https://github.com/Fin1806/flyrank-ml-internship/blob/main/work/notebooks/w07_action_playbook.ipynb">Week 7</a>.</p>
+          <p>From a fresh clone, install requirements.txt and ipykernel, open the notebook in VS Code, and run all cells. Access to the gated release and a Hugging Face read token are needed for a first run. The token comes from the HF_TOKEN environment variable or a hidden prompt. DuckDB reads only May and June partitions with a 1 GB memory limit and two threads; local page-level caches are ignored by Git. The grouped split and model both use seed 42.</p>
+          <p>The repository contains code, this article, and aggregate figures. It does not redistribute the gated page-level data.</p>
+        </div>
+      </section>
+
+      <section id="credit" class="article-section shell credit-section" aria-labelledby="credit-title">
+        <div class="section-label"><span>08 / Acknowledgments</span><span>Data credit</span></div>
+        <div class="prose">
+          <h2 id="credit-title">Acknowledgments and data credit</h2>
+          <p><a href="https://flyrank.ai">Built on the FlyRank ML Internship dataset</a>. The gated <a href="https://huggingface.co/datasets/FlyRank/internship-warehouse/blob/main/README.md">warehouse release</a> provides the data. <a href="https://developers.google.com/search/docs/monitor-debug/debugging-search-traffic-drops">Google Search Central's traffic-drop guide</a> informed the scope question; it does not endorse this rule. Thanks to the internship materials for the data-access and public-safety framework.</p>
+        </div>
+      </section>
+    </article>
+  </main>
+  <footer class="site-footer"><div class="shell"><span>Before You Refresh</span><span>Finley Septhian Darma · 2026</span><a href="#main">Back to top ↑</a></div></footer>
+</body>
+</html>
