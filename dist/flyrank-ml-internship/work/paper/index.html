@@ -62,7 +62,7 @@
         <div class="section-label"><span>01 / Question</span><span>Why this matters</span></div>
         <div class="prose">
           <h2 id="question-title">A page drop can be part of a larger drop.</h2>
-          <p>An editor can work through a queue one page at a time. But when many pages for the same client lose visibility together, checking a shared pattern may be the better first step. <a href="https://developers.google.com/search/docs/monitor-debug/debugging-search-traffic-drops">Google Search Central advises checking the scope of a traffic drop</a> across a site, a page group, or one page. This paper tests a measurable client-level signal for that first check.</p>
+          <p>An editor can work through a queue one page at a time. But when many pages for the same client lose visibility together, checking a shared pattern may be the better first step. This study follows the Refresh / Content Opportunity Scoring lane and adds a client-wide check to the page queue. <a href="https://developers.google.com/search/docs/monitor-debug/debugging-search-traffic-drops">Google Search Central advises checking the scope of a traffic drop</a> across a site, a page group, or one page.</p>
           <p>The output is a route for human review, not an automatic edit. A wrong route could waste editorial time or delay investigation of a shared issue. This is an independent internship study; the observed search data cannot diagnose the cause.</p>
         </div>
       </section>
@@ -71,7 +71,7 @@
         <div class="section-label"><span>02 / Data</span><span>What was measured</span></div>
         <div class="prose">
           <h2 id="data-title">The analysis is a May–June slice of a much larger release.</h2>
-          <p>The gated <a href="https://huggingface.co/datasets/FlyRank/internship-warehouse/blob/main/README.md">FlyRank warehouse release v20260703</a> contains 78,835,655 daily rows in its performance fact. I read the May and June 2026 partitions, not the entire release. An earlier source audit found 6,390 repeated GSC daily rows in this window; their GSC values matched, so the loader keeps one observation per client, page, and day.</p>
+          <p>The gated <a href="https://huggingface.co/datasets/FlyRank/internship-warehouse/blob/main/README.md">FlyRank warehouse release v20260703</a> contains 78,835,655 daily rows in the fact_content_daily_performance table. I read the May and June 2026 partitions, not the entire release. An earlier source audit found 6,390 repeated GSC daily rows in this window; their GSC values matched, so the loader keeps one observation per client, page, and day.</p>
           <p>The historical check retains 102,532 page-client records across 42 clients with 30 observed days in each window, nonmissing impressions and clicks, and at least 100 May impressions. The end-of-June review queue separately contains 96,678 pages across 44 clients with complete June coverage and at least 100 June impressions.</p>
         </div>
         <div class="timeline" aria-label="Analysis time windows">
