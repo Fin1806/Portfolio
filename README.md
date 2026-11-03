@@ -12,7 +12,7 @@ I'm **Finley Septhian Darma**, a Computer Science undergraduate at Bina Nusantar
 
 ## Experience
 
-- **Machine Learning Engineering Intern — FlyRank AI** · June 2026–present
+- **Machine Learning Engineering Intern — FlyRank AI** · June 2026–October 2026
   Contribute to content review ranking, action queues with reason codes and confidence labels, and search-performance analysis using Python, scikit-learn, and DuckDB.
 - **AI Support Associate — Solusi Prima Packaging** · June 2025–present
   Build chatbot and CRM workflows, including Bigin updates from voice notes and text messages, using n8n, MySQL, and Supabase.
