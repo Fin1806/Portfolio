@@ -6,8 +6,12 @@ const positions = new Map(objects.map(el=>[el,{x:0,y:0}]));
 const desktop = matchMedia('(min-width: 981px)');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const announcement = board.querySelector('#desktop-announcement');
+const utilities = board.querySelector('.desktop-utilities');
+const resetButton = utilities.querySelector('.reset-layout');
+utilities.hidden = false;
+resetButton.hidden = false;
+board.querySelectorAll('[data-drag-handle]').forEach(handle => { handle.hidden = false; });
 let active = null;
-let front = 3;
 let suppressClick = null;
 
 function place(el, x, y) {
@@ -23,6 +27,13 @@ function restore(el) {
   el.style.removeProperty('z-index');
 }
 
+function raiseWidget(el) {
+  const stack = objects.filter(widget => widget !== el);
+  stack.sort((left, right) => Number(left.style.zIndex) - Number(right.style.zIndex));
+  stack.push(el);
+  stack.forEach((widget, index) => { widget.style.zIndex = index + 2; });
+}
+
 function resetAll() {
   if(active) {
     active.el.classList.remove('is-dragging');
@@ -30,8 +41,12 @@ function resetAll() {
     active=null;
   }
   objects.forEach(restore);
-  announcement.textContent = 'Desktop layout restored.';
 }
+
+resetButton.addEventListener('click', () => {
+  resetAll();
+  announcement.textContent = 'Desktop layout restored.';
+});
 
 board.addEventListener('pointerdown', event=>{
   if(!desktop.matches || event.button!==0 || !event.isPrimary) return;
@@ -41,7 +56,7 @@ board.addEventListener('pointerdown', event=>{
   el.querySelector('.widget-entrance').style.animation = 'none';
   const pos = positions.get(el);
   active = {el,id:event.pointerId,startX:event.clientX,startY:event.clientY,x:pos.x,y:pos.y,moved:false};
-  el.style.zIndex = ++front;
+  raiseWidget(el);
 });
 
 board.addEventListener('pointermove',event=>{
@@ -95,7 +110,7 @@ board.addEventListener('keydown',event=>{
   if(!movement) return;
   event.preventDefault();
   const p=positions.get(el),step=event.shiftKey?40:10;
-  el.style.zIndex=++front;
+  raiseWidget(el);
   place(el,el.offsetLeft+p.x+movement[0]*step,el.offsetTop+p.y+movement[1]*step);
   announcement.textContent=`${el.dataset.object} moved.`;
 });
@@ -110,57 +125,68 @@ function handleResize() {
 addEventListener('resize',handleResize);
 desktop.addEventListener('change',handleResize);
 
-// Follow the actual Jakarta time; CSS rotation avoids an animated tick/reset.
-const timeFormat=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
-function updateAnalogClock() {
-  const now=new Date();
-  const parts=Object.fromEntries(timeFormat.formatToParts(now).map(p=>[p.type,p.value]));
-  const hour=Number(parts.hour)%12,minute=Number(parts.minute),second=Number(parts.second);
-  document.querySelector('#clock-hour').style.transform=`rotate(${hour*30+minute*.5}deg)`;
-  document.querySelector('#clock-minute').style.transform=`rotate(${minute*6+second*.1}deg)`;
-  document.querySelector('#clock-second').style.transform=`rotate(${second*6}deg)`;
+const timeFormat = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
+});
+const dateFormat = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Jakarta', weekday: 'short', day: 'numeric', month: 'short'
+});
+const clockReadout = board.querySelector('#jakarta-clock');
+const clockDate = board.querySelector('#jakarta-date');
+const hourHand = board.querySelector('#clock-hour');
+const minuteHand = board.querySelector('#clock-minute');
+const secondHand = board.querySelector('#clock-second');
+
+function updateClock() {
+  if (document.hidden) return;
+  const now = new Date();
+  const parts = Object.fromEntries(timeFormat.formatToParts(now).map(part => [part.type, part.value]));
+  const hour = Number(parts.hour) % 12;
+  const minute = Number(parts.minute);
+  const second = Number(parts.second);
+  const readout = `${parts.hour}:${parts.minute}`;
+  if (clockReadout.textContent !== readout) {
+    clockReadout.textContent = readout;
+    clockDate.textContent = `${dateFormat.format(now)} · UTC+7`;
+  }
+  hourHand.style.transform = `rotate(${hour * 30 + minute * 0.5}deg)`;
+  minuteHand.style.transform = `rotate(${minute * 6 + second * 0.1}deg)`;
+  secondHand.style.transform = `rotate(${second * 6}deg)`;
 }
-updateAnalogClock();
-setInterval(updateAnalogClock,1000);
+updateClock();
+setInterval(updateClock, 1000);
+document.addEventListener('visibilitychange', updateClock);
 
 const dock=document.querySelector('.desktop-dock');
 const items=[...dock.querySelectorAll('.dock-item')];
 const tiles=items.map(el=>el.querySelector('.dock-tile'));
 const surface=dock.querySelector('.dock-surface');
 let pointerX=null, frame=0;
-function positionDockLabels() {
-  dock.classList.toggle('labels-below',dock.getBoundingClientRect().top<90);
-}
 function paintDock() {
   frame=0;
-  const scales=items.map(el=>pointerX===null||reduceMotion.matches?1:dockScale(pointerX-(dock.getBoundingClientRect().left+el.offsetLeft+el.offsetWidth/2)));
+  const dockLeft = dock.getBoundingClientRect().left;
+  const dockWidth = dock.clientWidth;
+  const scales=items.map(el=>pointerX===null||reduceMotion.matches?1:dockScale(pointerX-(dockLeft+el.offsetLeft+el.offsetWidth/2)));
   const base=items.map(el=>el.offsetWidth);
+  const centers = items.map((el, i) => el.offsetLeft + base[i] / 2 - dockWidth / 2);
   const gap=parseFloat(getComputedStyle(dock).columnGap);
   const original=base.reduce((a,b)=>a+b,0)+gap*(items.length-1);
   const expanded=base.reduce((sum,w,i)=>sum+w*scales[i],0)+gap*(items.length-1);
   let before=0;
   items.forEach((el,i)=>{
     const center=before+base[i]*scales[i]/2-expanded/2;
-    const originalCenter=el.offsetLeft+base[i]/2-dock.clientWidth/2;
-    el.style.transform=`translateX(${center-originalCenter}px)`;
+    el.style.transform=`translateX(${center-centers[i]}px)`;
     tiles[i].style.transform=`scale(${scales[i]})`;
     before+=base[i]*scales[i]+gap;
   });
   surface.style.transform=`scaleX(${(expanded+26)/(original+26)})`;
-  positionDockLabels();
 }
 function scheduleDock() { if(!frame) frame=requestAnimationFrame(paintDock); }
 dock.addEventListener('pointermove',event=>{
-  if(event.pointerType!=='mouse') return;
+  if(!desktop.matches || event.pointerType!=='mouse') return;
   pointerX=event.clientX;scheduleDock();
 });
 dock.addEventListener('pointerleave',()=>{pointerX=null;scheduleDock();});
-dock.addEventListener('focusin',()=>{pointerX=null;positionDockLabels();scheduleDock();});
-dock.addEventListener('pointerenter',positionDockLabels);
-let labelFrame=0;
-addEventListener('scroll',()=>{
-  if(!labelFrame) labelFrame=requestAnimationFrame(()=>{labelFrame=0;positionDockLabels();});
-},{passive:true});
-positionDockLabels();
+dock.addEventListener('focusin',()=>{pointerX=null;scheduleDock();});
 reduceMotion.addEventListener('change',()=>{pointerX=null;scheduleDock();});
 addEventListener('resize',()=>{pointerX=null;scheduleDock();});

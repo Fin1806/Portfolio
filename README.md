@@ -1,6 +1,6 @@
 # Finley's Portfolio
 
-**[Visit finleydarma.me](https://finleydarma.me)** · [Resume](dist/assets/finley-darma-resume.pdf) · [LinkedIn](https://www.linkedin.com/in/finley-septhian-darma/)
+**[Visit finleydarma.me](https://www.finleydarma.me/)** · [Résumé](dist/assets/finley-darma-resume.pdf) · [LinkedIn](https://www.linkedin.com/in/finley-septhian-darma/)
 
 My personal website, bringing together my machine learning projects, automation work, experience, and a little about me.
 
@@ -12,11 +12,15 @@ I'm **Finley Septhian Darma**, a Computer Science undergraduate at Bina Nusantar
 
 ## Experience
 
-- **Machine Learning Engineering Intern — FlyRank AI** · June 2026–October 2026
-  Contribute to content review ranking, action queues with reason codes and confidence labels, and search-performance analysis using Python, scikit-learn, and DuckDB.
-- **AI Support Associate — Solusi Prima Packaging** · June 2025–present
-  Build chatbot and CRM workflows, including Bigin updates from voice notes and text messages, using n8n, MySQL, and Supabase.
-- **Teaching and community:** SASC scholarship tutor and former BNCC Learning and Training Activist, contributing to programming curriculum, exercises, and learning materials.
+- **AI Support Associate at Solusi Prima Packaging** (June 2025–present). Build customer support and sales workflows using n8n, MySQL, and CRM integrations.
+- **Machine Learning Internship Program (Self-paced) at FlyRank AI** (June–October 2026). Analyzed search impression declines in Python and DuckDB and compared ranking approaches on held-out clients.
+- **Teaching and community.** SASC Scholarship Tutor for two semesters and former BNCC Learning and Training Activist, with contributions to C, Java, and introductory machine learning materials.
+
+## Featured Work
+
+- [Sales Operations and CRM Automation](dist/projects/sales-crm-automation/index.html)
+- [Search Performance Analysis](dist/projects/search-performance-analysis/index.html) and [FlyRank research paper](dist/flyrank-ml-internship/work/paper/index.html)
+- [AI Customer Service Automation](dist/projects/ai-customer-service/index.html)
 
 ## Personal Projects
 
@@ -39,6 +43,8 @@ python -m http.server 8000 --directory dist
 ```
 
 Open [localhost:8000](http://localhost:8000). The website files are in `dist/`; no build step is needed.
+
+Run the desktop interaction math checks with `node --test tests/desktop-math.test.mjs`.
 
 ## Contact
 
